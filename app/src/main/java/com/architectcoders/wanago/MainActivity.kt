@@ -11,13 +11,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val binding : ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.recyclerEventsList.adapter = EventsAdapter(listOf(
-            Event("https://loremflickr.com/320/240?lock=1", "Drake","Sevilla"),
-            Event("https://loremflickr.com/320/240?lock=", "Drake","Madrid"),
-            Event("https://loremflickr.com/320/240?lock=3", "Drake","Barcelona"),
-            Event("https://loremflickr.com/320/240?lock=4", "Drake","Oviedo"),
-            Event("https://loremflickr.com/320/240?lock=5", "Drake","Valencia")
-        )
-        )
+        replaceFragment(FragmentEventsList())
+    }
+
+    private fun replaceFragment(fragmentEventsList: FragmentEventsList) {
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentContainerView, fragmentEventsList)
+        fragmentTransaction.commit()
     }
 }
