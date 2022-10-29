@@ -13,21 +13,15 @@ class FragmentEventsList : Fragment() {
 
     private var _binding:FragmentEventsListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter : EventsAdapter
+    private lateinit var eventsAdapter : EventsAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var eventList : List<Event>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentEventsListBinding.inflate(inflater, container,false)
         return binding.root
     }
@@ -38,12 +32,12 @@ class FragmentEventsList : Fragment() {
         bind()
 
         val layoutManager = LinearLayoutManager(context)
-        recyclerView = view.findViewById(R.id.recyclerEventsList)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.setHasFixedSize(true)
-        adapter = EventsAdapter(eventList)
-        recyclerView.adapter = adapter
-
+        eventsAdapter = EventsAdapter(eventList)
+        recyclerView = binding.recyclerEventsList.apply {
+            this.layoutManager = layoutManager
+            this.setHasFixedSize(true)
+            this.adapter = eventsAdapter
+        }
     }
 
     private fun bind() {

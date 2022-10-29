@@ -24,7 +24,7 @@ class EventsAdapter(private val events: List <Event>) : RecyclerView.Adapter<Eve
         fun bind(event: Event) {
             binding.tVArtistName.text = event.artistName
             binding.tVPlace.text = event.place
-            Glide.with(binding.root.context).load(event.poster).into(binding.iVPoster)
+            Glide.with(itemView.context).load(event.poster).into(binding.iVPoster)
         }
     }
 }
