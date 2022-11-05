@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/fragmentEventsList"
         android:name="com.architectcoders.wanago.presentation.FragmentEventsList"
-        android:label="fragment_events_list"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_events_list">
         <action
             android:id="@+id/action_fragmentEventsList_to_eventDetailsFragment"
@@ -18,6 +18,10 @@
     <fragment
         android:id="@+id/eventDetailsFragment"
         android:name="com.architectcoders.wanago.presentation.EventDetailsFragment"
-        android:label="fragment_event_details"
-        tools:layout="@layout/fragment_event_details" />
+        android:label="@string/event_details"
+        tools:layout="@layout/fragment_event_details" >
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+    </fragment>
 </navigation>
