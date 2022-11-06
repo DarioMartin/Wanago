@@ -37,6 +37,7 @@ android {
 
     detekt {
         toolVersion = "1.22.0-RC2"
+        config = files("../config/detekt/detekt.yml")
         source = files("src/main/java")
     }
 }
