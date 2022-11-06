@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id('io.gitlab.arturbosch.detekt') version '1.22.0-RC2'
 }
 
 android {
@@ -33,6 +34,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    detekt {
+        toolVersion = "1.22.0-RC2"
+        source = files("src/main/java")
+    }
 }
 
 dependencies {
@@ -47,4 +53,6 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+
+    detektPlugins 'io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0-RC3'
 }
