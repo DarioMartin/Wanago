@@ -28,3 +28,4 @@ class EventsAdapter(private val events: List <Event>) : RecyclerView.Adapter<Eve
         }
     }
 }
+
