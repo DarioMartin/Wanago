@@ -1,18 +1,24 @@
-package com.architectcoders.wanago.presentation
+package com.architectcoders.wanago.presentation.eventdetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.architectcoders.wanago.data.repository.EventRepository
 import com.architectcoders.wanago.databinding.FragmentEventDetailsBinding
+import com.architectcoders.wanago.domain.model.Event
 import com.bumptech.glide.Glide
 
 class EventDetailsFragment : Fragment() {
 
     private var _binding: FragmentEventDetailsBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: EventDetailsViewModel by viewModels {
+        EventDetailsViewModelFactory(EventRepository)
+    }
 
     private lateinit var eventId: String
 
@@ -34,12 +40,18 @@ class EventDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        EventRepository.getEventById(eventId)?.let { event ->
-            binding.artistName.text = event.artistName
-            binding.eventPlace.text = event.place
-            Glide.with(requireContext()).load(event.poster).into(binding.eventImage)
+        viewModel.event.observe(viewLifecycleOwner){event->
+            event?.let { paintEventDetails(it) }
         }
 
+        viewModel.loadEvent(eventId)
+
+    }
+
+    private fun paintEventDetails(event: Event) {
+        binding.artistName.text = event.artistName
+        binding.eventPlace.text = event.place
+        Glide.with(requireContext()).load(event.poster).into(binding.eventImage)
     }
 
 }
