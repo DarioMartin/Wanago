@@ -40,7 +40,7 @@ class EventDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.event.observe(viewLifecycleOwner){event->
+        viewModel.event.observe(viewLifecycleOwner) { event ->
             event?.let { paintEventDetails(it) }
         }
 
