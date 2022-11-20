@@ -1,4 +1,4 @@
-package com.architectcoders.wanago.presentation
+package com.architectcoders.wanago.presentation.eventlist
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import com.architectcoders.wanago.databinding.ItemEventBinding
 import com.architectcoders.wanago.domain.model.Event
 import com.bumptech.glide.Glide
 
-class EventsAdapter(private val events: List<Event>) :
+class EventsAdapter(private var events: List<Event> = listOf()) :
     RecyclerView.Adapter<EventViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -25,6 +25,10 @@ class EventsAdapter(private val events: List<Event>) :
     }
 
     override fun getItemCount() = events.size
+    fun setEvents(events: List<Event>) {
+        this.events = events
+        notifyDataSetChanged()
+    }
 
 }
 

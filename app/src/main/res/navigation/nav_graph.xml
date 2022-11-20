@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentEventsList"
-        android:name="com.architectcoders.wanago.presentation.FragmentEventsList"
+        android:name="com.architectcoders.wanago.presentation.eventlist.FragmentEventsList"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_events_list">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/eventDetailsFragment"
-        android:name="com.architectcoders.wanago.presentation.EventDetailsFragment"
+        android:name="com.architectcoders.wanago.presentation.eventdetails.EventDetailsFragment"
         android:label="@string/event_details"
         tools:layout="@layout/fragment_event_details" >
         <argument

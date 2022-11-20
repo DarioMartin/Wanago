@@ -1,20 +1,23 @@
-package com.architectcoders.wanago.presentation
+package com.architectcoders.wanago.presentation.eventlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.architectcoders.wanago.data.repository.EventRepository
 import com.architectcoders.wanago.databinding.FragmentEventsListBinding
-import com.architectcoders.wanago.domain.model.Event
 
 class FragmentEventsList : Fragment() {
 
     private var _binding: FragmentEventsListBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: EventListViewModel by viewModels {
+        EventListViewModelFactory(EventRepository)
+    }
 
     private lateinit var eventsAdapter: EventsAdapter
 
@@ -29,17 +32,18 @@ class FragmentEventsList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val repository = EventRepository
+        viewModel.events.observe(viewLifecycleOwner){events->
+            eventsAdapter.setEvents(events)
+        }
 
-        val layoutManager = LinearLayoutManager(context)
-        eventsAdapter = EventsAdapter(repository.getEvents())
+        eventsAdapter = EventsAdapter()
+
         binding.recyclerEventsList.apply {
-            this.layoutManager = layoutManager
+            this.layoutManager = LinearLayoutManager(context)
             this.setHasFixedSize(true)
             this.adapter = eventsAdapter
         }
     }
-
 
 }
 
