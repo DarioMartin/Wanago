@@ -46,3 +46,4 @@ class FragmentEventsList : Fragment() {
     }
 
 }
+
