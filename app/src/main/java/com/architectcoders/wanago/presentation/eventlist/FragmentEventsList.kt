@@ -1,6 +1,7 @@
 package com.architectcoders.wanago.presentation.eventlist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,9 @@ class FragmentEventsList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.events.observe(viewLifecycleOwner){events->
+        swipeToRefresh()
+
+        viewModel.events.observe(viewLifecycleOwner) { events ->
             eventsAdapter.setEvents(events)
         }
 
@@ -43,6 +46,14 @@ class FragmentEventsList : Fragment() {
             this.setHasFixedSize(true)
             this.adapter = eventsAdapter
         }
+    }
+
+    private fun swipeToRefresh() {
+
+        binding.swiper.setOnRefreshListener {
+            binding.swiper.isRefreshing = false
+        }
+
     }
 
 }
