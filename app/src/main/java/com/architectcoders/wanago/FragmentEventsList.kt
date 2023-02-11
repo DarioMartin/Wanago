@@ -42,11 +42,11 @@ class FragmentEventsList : Fragment() {
 
     private fun bind() {
         eventList = listOf(
-            Event("https://loremflickr.com/320/240?lock=1", "Drake","Sevilla"),
-            Event("https://loremflickr.com/320/240?lock=", "Drake","Madrid"),
-            Event("https://loremflickr.com/320/240?lock=3", "Drake","Barcelona"),
-            Event("https://loremflickr.com/320/240?lock=4", "Drake","Oviedo"),
-            Event("https://loremflickr.com/320/240?lock=5", "Drake","Valencia")
+            Event("Drake","https://loremflickr.com/320/240?lock=1", "Palacio de los deportes","Concierto"),
+            Event("Drake","https://loremflickr.com/320/240?lock=2", "Auditorio Rocio Jurado","Concierto"),
+            Event("Drake","https://loremflickr.com/320/240?lock=3", "Wizink Center","Concierto"),
+            Event("Drake","https://loremflickr.com/320/240?lock=4", "Estadio Olimpico","Concierto"),
+            Event("Drake","https://loremflickr.com/320/240?lock=5", "Sala Lone","Concierto")
         )
     }
 
