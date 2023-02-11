@@ -1,3 +1,11 @@
 package com.architectcoders.wanago
 
-data class Event(val poster: String, val artistName: String, val place: String)
+import com.architectcoders.wanago.data.server.Start
+import com.architectcoders.wanago.data.server.Status
+
+data class Event(
+    val name: String,
+    val imageUrl: String,
+    val venue: String,
+    val type: String
+    )

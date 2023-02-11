@@ -22,9 +22,10 @@ class EventsAdapter(private val events: List <Event>) : RecyclerView.Adapter<Eve
 
     class ViewHolder(private val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: Event) {
-            binding.tVArtistName.text = event.artistName
-            binding.tVPlace.text = event.place
-            Glide.with(itemView.context).load(event.poster).into(binding.iVPoster)
+            binding.tVArtistName.text = event.name
+            binding.tVPlace.text = event.venue
+            binding.tVType.text = event.type
+            Glide.with(itemView.context).load(event.imageUrl).into(binding.iVPoster)
         }
     }
 }
