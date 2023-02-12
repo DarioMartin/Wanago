@@ -1,8 +1,8 @@
-package com.architectcoders.wanago
+package com.architectcoders.wanago.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import com.architectcoders.wanago.R
 import com.architectcoders.wanago.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {

@@ -1,5 +1,6 @@
-package com.architectcoders.wanago
+package com.architectcoders.wanago.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,15 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import arrow.core.right
+import com.architectcoders.wanago.App
+import com.architectcoders.wanago.data.EventsRepository
 import com.architectcoders.wanago.databinding.FragmentEventsListBinding
+import com.architectcoders.wanago.domain.Event
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class FragmentEventsList : Fragment() {
+class FragmentEventsList : Fragment(), App.RepositoryListener {
 
     private var _binding:FragmentEventsListBinding? = null
     private val binding get() = _binding!!
     private lateinit var eventsAdapter : EventsAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var eventList : List<Event>
+    private var eventList : List<Event> = listOf()
+    private lateinit var app: App
 
 
     override fun onCreateView(
@@ -40,14 +49,25 @@ class FragmentEventsList : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        app = context.applicationContext as App
+        app.listeners.add(this)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        app.listeners.remove(this)
+    }
+
     private fun bind() {
-        eventList = listOf(
-            Event("Drake","https://loremflickr.com/320/240?lock=1", "Palacio de los deportes","Concierto"),
-            Event("Drake","https://loremflickr.com/320/240?lock=2", "Auditorio Rocio Jurado","Concierto"),
-            Event("Drake","https://loremflickr.com/320/240?lock=3", "Wizink Center","Concierto"),
-            Event("Drake","https://loremflickr.com/320/240?lock=4", "Estadio Olimpico","Concierto"),
-            Event("Drake","https://loremflickr.com/320/240?lock=5", "Sala Lone","Concierto")
-        )
+        eventList = app.eventRepository.nearbyEvents
+    }
+
+    override fun onEventListUpdated() {
+        GlobalScope.launch(Dispatchers.Main) {
+            eventsAdapter.notifyDataSetChanged()
+        }
     }
 
 }
