@@ -1,9 +1,10 @@
-package com.architectcoders.wanago
+package com.architectcoders.wanago.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.architectcoders.wanago.databinding.ItemEventBinding
+import com.architectcoders.wanago.domain.Event
 import com.bumptech.glide.Glide
 
 class EventsAdapter(private val events: List <Event>) : RecyclerView.Adapter<EventsAdapter.ViewHolder>() {
@@ -22,10 +23,9 @@ class EventsAdapter(private val events: List <Event>) : RecyclerView.Adapter<Eve
 
     class ViewHolder(private val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: Event) {
-            binding.tVArtistName.text = event.name
-            binding.tVPlace.text = event.venue
-            binding.tVType.text = event.type
-            Glide.with(itemView.context).load(event.imageUrl).into(binding.iVPoster)
+            binding.eventName.text = event.name
+            binding.eventVenue.text = event.venue
+            Glide.with(itemView.context).load(event.imageUrl).into(binding.eventImage)
         }
     }
 }
