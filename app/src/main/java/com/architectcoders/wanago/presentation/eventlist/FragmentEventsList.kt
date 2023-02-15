@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.architectcoders.wanago.data.repository.EventsRepository
+import com.architectcoders.wanago.data.EventsRepository
 import com.architectcoders.wanago.databinding.FragmentEventsListBinding
 
 class FragmentEventsList : Fragment() {
