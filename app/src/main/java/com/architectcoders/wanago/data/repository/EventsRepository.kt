@@ -2,7 +2,7 @@ package com.architectcoders.wanago.data.repository
 
 import com.architectcoders.wanago.domain.model.Event
 
-object EventRepository {
+object EventsRepository {
     private val eventList = listOf(
         Event("1", "https://loremflickr.com/320/240?lock=1", "Drake", "Sevilla"),
         Event("2", "https://loremflickr.com/320/240?lock=", "Drake", "Madrid"),
