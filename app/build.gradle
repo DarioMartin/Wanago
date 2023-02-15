@@ -50,8 +50,12 @@ android {
 }
 
 dependencies {
+    implementation project(":data")
+    implementation project(":domain")
+    implementation project(":usecases")
+
     def nav_version = "2.5.3"
-    def fragment_version = "1.5.4"
+    def fragment_version = "1.5.5"
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
