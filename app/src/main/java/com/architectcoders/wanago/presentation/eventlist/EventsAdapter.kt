@@ -35,9 +35,9 @@ class EventsAdapter(private var events: List<Event> = listOf()) :
 class EventViewHolder(private val binding: ItemEventBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(event: Event) {
-        binding.tVArtistName.text = event.artistName
-        binding.tVPlace.text = event.place
-        Glide.with(itemView.context).load(event.poster).into(binding.iVPoster)
+        binding.eventName.text = event.name
+        binding.eventVenue.text = event.venue
+        Glide.with(itemView.context).load(event.imageUrl).into(binding.eventImage)
 
         itemView.setOnClickListener { view -> navigateToDetails(view, event) }
     }

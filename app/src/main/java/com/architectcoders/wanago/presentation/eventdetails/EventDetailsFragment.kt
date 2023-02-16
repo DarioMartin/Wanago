@@ -49,9 +49,9 @@ class EventDetailsFragment : Fragment() {
     }
 
     private fun paintEventDetails(event: Event) {
-        binding.artistName.text = event.artistName
-        binding.eventPlace.text = event.place
-        Glide.with(requireContext()).load(event.poster).into(binding.eventImage)
+        binding.detailsEventName.text = event.name
+        binding.detailsEventVenue.text = event.venue
+        Glide.with(requireContext()).load(event.imageUrl).into(binding.eventImage)
     }
 
 }

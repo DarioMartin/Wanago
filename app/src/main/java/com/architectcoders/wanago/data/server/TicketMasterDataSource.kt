@@ -1,9 +1,7 @@
 package com.architectcoders.wanago.data.server
 
-import arrow.core.Either
 import com.architectcoders.wanago.data.datasource.EventsRemoteDataSource
-import com.architectcoders.wanago.domain.Error
-import com.architectcoders.wanago.domain.Event
+import com.architectcoders.wanago.domain.model.Event
 
 class TicketMasterDataSource(private val apiKey: String) : EventsRemoteDataSource {
 
