@@ -1,14 +1,13 @@
 package com.architectcoders.wanago.data.repository
 
-import com.architectcoders.wanago.App
-import com.architectcoders.wanago.R
+import com.architectcoders.wanago.BuildConfig
 import com.architectcoders.wanago.data.server.TicketMasterDataSource
 import com.architectcoders.wanago.domain.Error
 import com.architectcoders.wanago.domain.model.Event
 import com.architectcoders.wanago.domain.tryCall
 
 object EventsRepository {
-    private val remoteDataSource = TicketMasterDataSource("SzW9Zhsm9UBLMeNrXdCzyObBfv0Ublxp")
+    private val remoteDataSource = TicketMasterDataSource(BuildConfig.ticketMasterApiKey)
 
     var nearbyEvents: MutableList<Event> = mutableListOf()
 
