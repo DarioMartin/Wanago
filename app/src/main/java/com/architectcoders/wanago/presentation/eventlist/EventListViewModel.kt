@@ -18,7 +18,7 @@ class EventListViewModel(private val eventRepository: EventsRepository) : ViewMo
 
     private fun getEvents() {
         viewModelScope.launch {
-            _events.value = eventRepository.getEvents()
+            _events.value = eventRepository.nearbyEvents
         }
     }
 }
