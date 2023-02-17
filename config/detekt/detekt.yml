@@ -100,7 +100,7 @@ complexity:
     includeStaticDeclarations: false
     includePrivateDeclarations: false
     ignoreOverloaded: false
-  ComplexMethod:
+  CyclomaticComplexMethod:
     active: true
     threshold: 15
     ignoreSingleWhenExpression: false

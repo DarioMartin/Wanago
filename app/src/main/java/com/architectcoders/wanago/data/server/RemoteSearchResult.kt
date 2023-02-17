@@ -1,8 +1,10 @@
 package com.architectcoders.wanago.data.server
 
+import com.google.gson.annotations.SerializedName
+
 data class RemoteSearchResult(
-    val _embedded: Embedded,
-    val _links: Map<String, Link>,
+    @SerializedName("_embedded") val embedded: Embedded,
+    @SerializedName("_links") val links: Map<String, Link>,
     val page: Page
 )
 
@@ -18,8 +20,8 @@ data class Page(
 )
 
 data class RemoteEvent(
-    val _embedded: EmbeddedX,
-    val _links: EventLinks,
+    @SerializedName("_embedded") val embedded: EmbeddedX,
+    @SerializedName("_links") val links: EventLinks,
     val accessibility: Accessibility,
     val ageRestrictions: AgeRestrictions,
     val classifications: List<Classification>,
@@ -100,7 +102,7 @@ data class Promoter(
 
 data class Sales(
     val presales: List<Presale>,
-    val `public`: Public
+    @SerializedName("`public`") val public: Public
 )
 
 data class Seatmap(
@@ -116,7 +118,7 @@ data class Ticketing(
 )
 
 data class Attraction(
-    val _links: Map<String, Link>,
+    @SerializedName("_links") val links: Map<String, Link>,
     val aliases: List<String>,
     val classifications: List<Classification>,
     val externalLinks: ExternalLinks,
@@ -131,7 +133,7 @@ data class Attraction(
 )
 
 data class Venue(
-    val _links: Map<String, Link>,
+    @SerializedName("_links") val links: Map<String, Link>,
     val accessibleSeatingDetail: String,
     val address: Address,
     val boxOfficeInfo: BoxOfficeInfo,
@@ -177,8 +179,8 @@ data class ExternalLinks(
 )
 
 data class UpcomingEvents(
-    val _filtered: Int,
-    val _total: Int,
+    @SerializedName("_filtered") val filtered: Int,
+    @SerializedName("_total") val total: Int,
     val ticketmaster: Int,
     val tmr: Int
 )
@@ -271,8 +273,8 @@ data class State(
 )
 
 data class UpcomingEventsX(
-    val _filtered: Int,
-    val _total: Int,
+    @SerializedName("_filtered") val filtered: Int,
+    @SerializedName("_total") val total: Int,
     val ticketmaster: Int
 )
 
