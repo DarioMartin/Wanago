@@ -69,6 +69,8 @@ dependencies {
     implementation Libs.AndroidX.Navigation.fragmentKtx
     implementation Libs.AndroidX.Navigation.uiKtx
 
+    implementation Libs.PlayServicesLocation.library
+
     implementation Libs.OkHttp3.loginInterceptor
     implementation Libs.Retrofit.library
     implementation Libs.Retrofit.converterGson
