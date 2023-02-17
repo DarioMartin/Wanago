@@ -5,7 +5,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
     id 'androidx.navigation.safeargs.kotlin'
-    id('io.gitlab.arturbosch.detekt') version '1.22.0'
 }
 
 android {
@@ -43,12 +42,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
-    detekt {
-        toolVersion = "1.22.0"
-        config = files("../config/detekt/detekt.yml")
-        source = files("src/main/java")
-    }
 }
 
 dependencies {
@@ -81,6 +74,4 @@ dependencies {
     testImplementation Libs.JUnit.library
     androidTestImplementation Libs.AndroidX.Test.Ext.junit
     androidTestImplementation Libs.AndroidX.Test.Espresso.core
-
-    detektPlugins Libs.Detekt.library
 }

@@ -16,6 +16,25 @@ buildscript {
         classpath Libs.AndroidX.Navigation.gradlePlugin
         classpath Libs.gradleVersionsPlugin
     }
+    configurations {
+        detekt
+    }
+}
+
+def detektTask = tasks.register("detekt", JavaExec) {
+    main = "io.gitlab.arturbosch.detekt.cli.Main"
+    classpath = configurations.detekt
+
+    def input = "$projectDir"
+    def config = "$projectDir/config/detekt/detekt.yml"
+    def exclude = "$projectDir/**/build/**,**/resources/**"
+    def params = [ '-i', input, '-c', config, '-ex', exclude]
+
+    args(params)
+}
+
+dependencies {
+    detekt 'io.gitlab.arturbosch.detekt:detekt-cli:1.22.0'
 }
 
 // Taken from https://github.com/ben-manes/gradle-versions-plugin

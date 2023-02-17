@@ -83,9 +83,4 @@ object Libs {
         private const val version = "4.13.2"
         const val library = "junit:junit:$version"
     }
-
-    object Detekt {
-        private const val version = "1.22.0"
-        const val library = "io.gitlab.arturbosch.detekt:detekt-formatting:$version"
-    }
 }
