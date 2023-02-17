@@ -8,7 +8,7 @@ class TicketMasterDataSource(private val apiKey: String) : EventsRemoteDataSourc
     override suspend fun findNearbyEvents(region: String): List<Event> =
         RemoteConnection.service
             .listNearbyEvents(apiKey, region)
-            ._embedded.events
+            .embedded.events
             .toDomainModel()
 }
 
@@ -19,5 +19,5 @@ private fun RemoteEvent.toDomainModel(): Event =
         id,
         name,
         if (images.isNotEmpty()) images[0].url else "",
-        if (_embedded.venues.isNotEmpty()) _embedded.venues[0].name else "TBD",
+        if (embedded.venues.isNotEmpty()) embedded.venues[0].name else "TBD",
     )
