@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.architectcoders.wanago.BuildConfig
 import com.architectcoders.wanago.data.EventsRepository
+import com.architectcoders.wanago.data.server.TicketMasterDataSource
 import com.architectcoders.wanago.databinding.FragmentEventsListBinding
 
 class FragmentEventsList : Fragment() {
@@ -16,7 +18,7 @@ class FragmentEventsList : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: EventListViewModel by viewModels {
-        EventListViewModelFactory(EventsRepository)
+        EventListViewModelFactory(EventsRepository(TicketMasterDataSource(BuildConfig.ticketMasterApiKey)))
     }
 
     private lateinit var eventsAdapter: EventsAdapter
