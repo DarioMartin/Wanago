@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.architectcoders.wanago.databinding.FragmentEventDetailsBinding
 import com.architectcoders.wanago.domain.WanagoEvent
+import com.architectcoders.wanago.presentation.common.launchAndCollect
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,7 +40,7 @@ class EventDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.event.observe(viewLifecycleOwner) { event ->
+        viewLifecycleOwner.launchAndCollect(viewModel.event) { event ->
             event?.let { paintEventDetails(it) }
         }
 
