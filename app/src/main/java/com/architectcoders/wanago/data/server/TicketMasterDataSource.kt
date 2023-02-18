@@ -2,13 +2,13 @@ package com.architectcoders.wanago.data.server
 
 import arrow.core.Either
 import com.architectcoders.wanago.data.datasource.EventsRemoteDataSource
-import com.architectcoders.wanago.domain.Event
+import com.architectcoders.wanago.domain.WanagoEvent
 import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.tryCall
 
 class TicketMasterDataSource(private val apiKey: String) : EventsRemoteDataSource {
 
-    override suspend fun findNearbyEvents(region: String): Either<WanagoError, List<Event>> = tryCall {
+    override suspend fun findNearbyEvents(region: String): Either<WanagoError, List<WanagoEvent>> = tryCall {
         RemoteConnection.service
             .listNearbyEvents(apiKey, region)
             .embedded.events
@@ -16,10 +16,10 @@ class TicketMasterDataSource(private val apiKey: String) : EventsRemoteDataSourc
     }
 }
 
-private fun List<RemoteEvent>.toDomainModel(): List<Event> = map { it.toDomainModel() }
+private fun List<RemoteEvent>.toDomainModel(): List<WanagoEvent> = map { it.toDomainModel() }
 
-private fun RemoteEvent.toDomainModel(): Event =
-    Event(
+private fun RemoteEvent.toDomainModel(): WanagoEvent =
+    WanagoEvent(
         id,
         name,
         if (images.isNotEmpty()) images[0].url else "",

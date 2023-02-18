@@ -14,7 +14,7 @@ import com.architectcoders.wanago.data.RegionRepository
 import com.architectcoders.wanago.data.database.EventRoomDataSource
 import com.architectcoders.wanago.data.server.TicketMasterDataSource
 import com.architectcoders.wanago.databinding.FragmentEventDetailsBinding
-import com.architectcoders.wanago.domain.Event
+import com.architectcoders.wanago.domain.WanagoEvent
 import com.architectcoders.wanago.presentation.common.app
 import com.bumptech.glide.Glide
 
@@ -62,7 +62,7 @@ class EventDetailsFragment : Fragment() {
 
     }
 
-    private fun paintEventDetails(event: Event) {
+    private fun paintEventDetails(event: WanagoEvent) {
         binding.detailsEventName.text = event.name
         binding.detailsEventVenue.text = event.venue
         Glide.with(requireContext()).load(event.imageUrl).into(binding.eventImage)

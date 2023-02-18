@@ -2,10 +2,9 @@ package com.architectcoders.wanago.data
 
 import com.architectcoders.wanago.data.datasource.EventsLocalDataSource
 import com.architectcoders.wanago.data.datasource.EventsRemoteDataSource
-import com.architectcoders.wanago.domain.Event
 import com.architectcoders.wanago.domain.WanagoError
+import com.architectcoders.wanago.domain.WanagoEvent
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 
 class EventsRepository (
     private val regionRepository: RegionRepository,
@@ -24,5 +23,5 @@ class EventsRepository (
         return null
     }
 
-    fun getEventById(id: String): Flow<Event> = localDataSource.getById(id)
+    fun getEventById(id: String): Flow<WanagoEvent> = localDataSource.getById(id)
 }
