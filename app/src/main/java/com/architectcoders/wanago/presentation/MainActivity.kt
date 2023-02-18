@@ -7,7 +7,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.architectcoders.wanago.R
 import com.architectcoders.wanago.databinding.ActivityMainBinding
-import com.architectcoders.wanago.domain.model.Event
 
 class MainActivity : AppCompatActivity() {
 

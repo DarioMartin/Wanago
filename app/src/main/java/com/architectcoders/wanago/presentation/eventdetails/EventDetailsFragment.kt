@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.architectcoders.wanago.data.repository.EventsRepository
+import com.architectcoders.wanago.BuildConfig
+import com.architectcoders.wanago.data.EventsRepository
+import com.architectcoders.wanago.data.server.TicketMasterDataSource
 import com.architectcoders.wanago.databinding.FragmentEventDetailsBinding
-import com.architectcoders.wanago.domain.model.Event
+import com.architectcoders.wanago.domain.Event
 import com.bumptech.glide.Glide
 
 class EventDetailsFragment : Fragment() {
@@ -17,7 +19,7 @@ class EventDetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: EventDetailsViewModel by viewModels {
-        EventDetailsViewModelFactory(EventsRepository)
+        EventDetailsViewModelFactory(EventsRepository(TicketMasterDataSource(BuildConfig.ticketMasterApiKey)))
     }
 
     private lateinit var eventId: String

@@ -1,4 +1,4 @@
-package com.architectcoders.wanago.domain.model
+package com.architectcoders.wanago.domain
 
 data class Event(
     val id: String,

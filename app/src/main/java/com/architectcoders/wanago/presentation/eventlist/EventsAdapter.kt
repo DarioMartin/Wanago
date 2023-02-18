@@ -1,12 +1,13 @@
 package com.architectcoders.wanago.presentation.eventlist
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.architectcoders.wanago.databinding.ItemEventBinding
-import com.architectcoders.wanago.domain.model.Event
+import com.architectcoders.wanago.domain.Event
 import com.bumptech.glide.Glide
 
 class EventsAdapter(private var events: List<Event> = listOf()) :
@@ -25,6 +26,8 @@ class EventsAdapter(private var events: List<Event> = listOf()) :
     }
 
     override fun getItemCount() = events.size
+    
+    @SuppressLint("NotifyDataSetChanged")
     fun setEvents(events: List<Event>) {
         this.events = events
         notifyDataSetChanged()
