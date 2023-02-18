@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +16,7 @@ import com.architectcoders.wanago.data.database.EventRoomDataSource
 import com.architectcoders.wanago.data.server.TicketMasterDataSource
 import com.architectcoders.wanago.databinding.FragmentEventsListBinding
 import com.architectcoders.wanago.presentation.common.app
+import com.architectcoders.wanago.presentation.common.launchAndCollect
 
 class FragmentEventsList : Fragment() {
 
@@ -29,9 +29,11 @@ class FragmentEventsList : Fragment() {
             EventsRepository(
                 RegionRepository(
                     PlayServicesLocationDataSource(application),
-                    AndroidPermissionChecker(application)),
+                    AndroidPermissionChecker(application)
+                ),
                 EventRoomDataSource(requireActivity().app.db.eventDao()),
-                TicketMasterDataSource(BuildConfig.ticketMasterApiKey))
+                TicketMasterDataSource(BuildConfig.ticketMasterApiKey)
+            )
         )
     }
 
@@ -50,7 +52,7 @@ class FragmentEventsList : Fragment() {
 
         swipeToRefresh()
 
-        viewModel.events.observe(viewLifecycleOwner) { events ->
+        viewLifecycleOwner.launchAndCollect(viewModel.events) { events ->
             eventsAdapter.setEvents(events)
         }
 

@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.architectcoders.wanago.databinding.ItemEventBinding
-import com.architectcoders.wanago.domain.Event
+import com.architectcoders.wanago.domain.WanagoEvent
 import com.bumptech.glide.Glide
 
-class EventsAdapter(private var events: List<Event> = listOf()) :
+class EventsAdapter(private var events: List<WanagoEvent> = listOf()) :
     RecyclerView.Adapter<EventViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -28,7 +28,7 @@ class EventsAdapter(private var events: List<Event> = listOf()) :
     override fun getItemCount() = events.size
     
     @SuppressLint("NotifyDataSetChanged")
-    fun setEvents(events: List<Event>) {
+    fun setEvents(events: List<WanagoEvent>) {
         this.events = events
         notifyDataSetChanged()
     }
@@ -37,7 +37,7 @@ class EventsAdapter(private var events: List<Event> = listOf()) :
 
 class EventViewHolder(private val binding: ItemEventBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(event: Event) {
+    fun bind(event: WanagoEvent) {
         binding.eventName.text = event.name
         binding.eventVenue.text = event.venue
         Glide.with(itemView.context).load(event.imageUrl).into(binding.eventImage)
@@ -45,7 +45,7 @@ class EventViewHolder(private val binding: ItemEventBinding) :
         itemView.setOnClickListener { view -> navigateToDetails(view, event) }
     }
 
-    private fun navigateToDetails(view: View, event: Event) {
+    private fun navigateToDetails(view: View, event: WanagoEvent) {
         val action =
             FragmentEventsListDirections.actionFragmentEventsListToEventDetailsFragment(event.id)
         view.findNavController().navigate(action)
