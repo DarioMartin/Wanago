@@ -5,4 +5,5 @@ data class Event(
     val name: String,
     val imageUrl: String,
     val venue: String,
+    val isFavorite: Boolean = false
 )

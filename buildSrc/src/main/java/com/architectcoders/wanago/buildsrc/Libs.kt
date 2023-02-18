@@ -44,6 +44,13 @@ object Libs {
             const val gradlePlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
         }
 
+        object Room {
+            private const val version = "2.5.0"
+            const val ktx = "androidx.room:room-ktx:$version"
+            const val compiler = "androidx.room:room-compiler:$version"
+            const val library = "androidx.room:room-runtime:$version"
+        }
+
         object Test {
             object Ext {
                 private const val version = "1.1.5"
@@ -77,6 +84,11 @@ object Libs {
         private const val version = "2.9.0"
         const val library = "com.squareup.retrofit2:retrofit:$version"
         const val converterGson = "com.squareup.retrofit2:converter-gson:$version"
+    }
+
+    object Arrow {
+        private const val version = "1.1.5"
+        const val library = "io.arrow-kt:arrow-core:$version"
     }
 
     object JUnit {

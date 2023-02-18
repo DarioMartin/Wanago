@@ -11,6 +11,7 @@ import com.architectcoders.wanago.data.AndroidPermissionChecker
 import com.architectcoders.wanago.data.EventsRepository
 import com.architectcoders.wanago.data.PlayServicesLocationDataSource
 import com.architectcoders.wanago.data.RegionRepository
+import com.architectcoders.wanago.data.database.EventRoomDataSource
 import com.architectcoders.wanago.data.server.TicketMasterDataSource
 import com.architectcoders.wanago.databinding.FragmentEventDetailsBinding
 import com.architectcoders.wanago.domain.Event
@@ -28,6 +29,7 @@ class EventDetailsFragment : Fragment() {
                 RegionRepository(
                     PlayServicesLocationDataSource(requireActivity().app),
                     AndroidPermissionChecker(requireActivity().app)),
+                EventRoomDataSource(requireActivity().app.db.eventDao()),
                 TicketMasterDataSource(BuildConfig.ticketMasterApiKey))
         )
     }
