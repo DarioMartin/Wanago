@@ -1,19 +1,8 @@
 package com.architectcoders.wanago
 
 import android.app.Application
-import androidx.room.Room
-import com.architectcoders.wanago.data.database.EventDatabase
+import dagger.hilt.android.HiltAndroidApp
 
-class App : Application() {
-    lateinit var db: EventDatabase
-        private set
+@HiltAndroidApp
+class App : Application()
 
-    override fun onCreate() {
-        super.onCreate()
-
-        db = Room.databaseBuilder(
-            this,
-            EventDatabase::class.java, "event-db"
-        ).build()
-    }
-}

@@ -6,10 +6,14 @@ import com.architectcoders.wanago.data.EventsRepository
 import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
 import com.architectcoders.wanago.domain.toError
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EventListViewModel(private val eventRepository: EventsRepository) : ViewModel() {
+@HiltViewModel
+class EventListViewModel @Inject constructor(private val eventRepository: EventsRepository) :
+    ViewModel() {
 
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()

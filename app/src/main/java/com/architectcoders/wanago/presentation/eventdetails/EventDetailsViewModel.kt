@@ -6,10 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architectcoders.wanago.data.EventsRepository
 import com.architectcoders.wanago.domain.WanagoEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EventDetailsViewModel(private val eventRepository: EventsRepository) : ViewModel() {
+@HiltViewModel
+class EventDetailsViewModel @Inject constructor(private val eventRepository: EventsRepository) :
+    ViewModel() {
 
     private val _event = MutableLiveData<WanagoEvent>()
     val event: LiveData<WanagoEvent> get() = _event
