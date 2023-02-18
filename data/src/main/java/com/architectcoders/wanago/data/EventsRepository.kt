@@ -5,8 +5,9 @@ import com.architectcoders.wanago.data.datasource.EventsRemoteDataSource
 import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class EventsRepository(
+class EventsRepository @Inject constructor(
     private val regionRepository: RegionRepository,
     private val localDataSource: EventsLocalDataSource,
     private val remoteDataSource: EventsRemoteDataSource

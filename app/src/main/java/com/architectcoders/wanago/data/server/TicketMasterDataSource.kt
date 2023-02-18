@@ -2,18 +2,22 @@ package com.architectcoders.wanago.data.server
 
 import arrow.core.Either
 import com.architectcoders.wanago.data.datasource.EventsRemoteDataSource
-import com.architectcoders.wanago.domain.WanagoEvent
+import com.architectcoders.wanago.di.ApiKey
 import com.architectcoders.wanago.domain.WanagoError
+import com.architectcoders.wanago.domain.WanagoEvent
 import com.architectcoders.wanago.domain.tryCall
+import javax.inject.Inject
 
-class TicketMasterDataSource(private val apiKey: String) : EventsRemoteDataSource {
+class TicketMasterDataSource @Inject constructor(@ApiKey private val apiKey: String) :
+    EventsRemoteDataSource {
 
-    override suspend fun findNearbyEvents(region: String): Either<WanagoError, List<WanagoEvent>> = tryCall {
-        RemoteConnection.service
-            .listNearbyEvents(apiKey, region)
-            .embedded.events
-            .toDomainModel()
-    }
+    override suspend fun findNearbyEvents(region: String): Either<WanagoError, List<WanagoEvent>> =
+        tryCall {
+            RemoteConnection.service
+                .listNearbyEvents(apiKey, region)
+                .embedded.events
+                .toDomainModel()
+        }
 }
 
 private fun List<RemoteEvent>.toDomainModel(): List<WanagoEvent> = map { it.toDomainModel() }
