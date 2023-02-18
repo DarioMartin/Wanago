@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.architectcoders.wanago.data.repository.EventsRepository
-import com.architectcoders.wanago.domain.model.Event
+import com.architectcoders.wanago.data.EventsRepository
+import com.architectcoders.wanago.domain.Event
 import kotlinx.coroutines.launch
 
 class EventListViewModel(private val eventRepository: EventsRepository) : ViewModel() {
