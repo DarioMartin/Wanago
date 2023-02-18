@@ -57,6 +57,11 @@ object Libs {
         }
     }
 
+    object PlayServicesLocation {
+        private const val version = "21.0.1"
+        const val library = "com.google.android.gms:play-services-location:$version"
+    }
+
     object Glide {
         private const val version = "4.14.2"
         const val library = "com.github.bumptech.glide:glide:$version"

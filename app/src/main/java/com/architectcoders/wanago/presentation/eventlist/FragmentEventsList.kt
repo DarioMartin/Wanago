@@ -4,13 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.architectcoders.wanago.BuildConfig
+import com.architectcoders.wanago.data.AndroidPermissionChecker
 import com.architectcoders.wanago.data.EventsRepository
+import com.architectcoders.wanago.data.PlayServicesLocationDataSource
+import com.architectcoders.wanago.data.RegionRepository
 import com.architectcoders.wanago.data.server.TicketMasterDataSource
 import com.architectcoders.wanago.databinding.FragmentEventsListBinding
+import com.architectcoders.wanago.presentation.common.app
 
 class FragmentEventsList : Fragment() {
 
@@ -18,7 +23,14 @@ class FragmentEventsList : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: EventListViewModel by viewModels {
-        EventListViewModelFactory(EventsRepository(TicketMasterDataSource(BuildConfig.ticketMasterApiKey)))
+        val application = requireActivity().app
+        EventListViewModelFactory(
+            EventsRepository(
+                RegionRepository(
+                    PlayServicesLocationDataSource(application),
+                    AndroidPermissionChecker(application)),
+                TicketMasterDataSource(BuildConfig.ticketMasterApiKey))
+        )
     }
 
     private lateinit var eventsAdapter: EventsAdapter
