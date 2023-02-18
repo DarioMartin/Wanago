@@ -17,6 +17,7 @@ import com.architectcoders.wanago.data.server.TicketMasterDataSource
 import com.architectcoders.wanago.databinding.FragmentEventsListBinding
 import com.architectcoders.wanago.presentation.common.app
 import com.architectcoders.wanago.presentation.common.launchAndCollect
+import com.architectcoders.wanago.presentation.common.setVisible
 
 class FragmentEventsList : Fragment() {
 
@@ -50,10 +51,10 @@ class FragmentEventsList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipeToRefresh()
+        binding.swiper.setOnRefreshListener { viewModel.getEvents(forceUpdate = true) }
 
-        viewLifecycleOwner.launchAndCollect(viewModel.events) { events ->
-            eventsAdapter.setEvents(events)
+        viewLifecycleOwner.launchAndCollect(viewModel.state) { state ->
+            updateUiState(state)
         }
 
         eventsAdapter = EventsAdapter()
@@ -65,11 +66,16 @@ class FragmentEventsList : Fragment() {
         }
     }
 
-    private fun swipeToRefresh() {
+    private fun updateUiState(state: UiState) {
+        binding.swiper.isRefreshing = false
 
-        binding.swiper.setOnRefreshListener {
-            binding.swiper.isRefreshing = false
+        binding.progress.setVisible(state.loading)
+
+        if (state.events?.isEmpty() == false) {
+            eventsAdapter.setEvents(state.events)
         }
+
+        binding.emptyListMessage.setVisible(state.events?.isEmpty() == true)
 
     }
 

@@ -1,6 +1,7 @@
 package com.architectcoders.wanago.presentation.common
 
 import android.content.Context
+import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -22,4 +23,16 @@ fun <T> LifecycleOwner.launchAndCollect(
             flow.collect(body)
         }
     }
+}
+
+fun View.setVisible(visible: Boolean) {
+    visibility = if (visible) View.VISIBLE else View.GONE
+}
+
+fun View.visible() {
+    visibility = View.VISIBLE
+}
+
+fun View.gone() {
+    visibility = View.GONE
 }
