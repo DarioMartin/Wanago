@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architectcoders.wanago.data.EventsRepository
 import com.architectcoders.wanago.domain.Event
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class EventListViewModel(private val eventRepository: EventsRepository) : ViewModel() {
@@ -18,7 +19,7 @@ class EventListViewModel(private val eventRepository: EventsRepository) : ViewMo
 
     private fun getEvents() {
         viewModelScope.launch {
-            _events.value = eventRepository.nearbyEvents
+            _events.value = eventRepository.nearbyEvents.first()
         }
     }
 }
