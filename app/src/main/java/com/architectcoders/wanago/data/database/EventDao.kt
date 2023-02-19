@@ -9,15 +9,15 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface EventDao {
 
-    @Query("SELECT * FROM Event")
-    fun getAll(): Flow<List<Event>>
+    @Query("SELECT * FROM DBEvent")
+    fun getAll(): Flow<List<DBEvent>>
 
-    @Query("SELECT * FROM Event WHERE id = :id")
-    fun getById(id: String): Flow<Event>
+    @Query("SELECT * FROM DBEvent WHERE id = :id")
+    fun getById(id: String): Flow<DBEvent>
 
-    @Query("SELECT COUNT(id) FROM Event")
+    @Query("SELECT COUNT(id) FROM DBEvent")
     suspend fun eventCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEvents(events: List<Event>)
+    suspend fun insertEvents(dbEvents: List<DBEvent>)
 }

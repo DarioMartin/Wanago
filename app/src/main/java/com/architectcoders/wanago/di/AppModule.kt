@@ -43,18 +43,19 @@ object AppModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AppDataModule {
+interface AppDataModule {
 
     @Binds
-    abstract fun bindLocalDataSource(localDataSource: EventRoomDataSource): EventsLocalDataSource
+    fun bindLocalDataSource(localDataSource: EventRoomDataSource): EventsLocalDataSource
 
     @Binds
-    abstract fun bindRemoteDataSource(remoteDataSource: TicketMasterDataSource): EventsRemoteDataSource
+    fun bindRemoteDataSource(remoteDataSource: TicketMasterDataSource): EventsRemoteDataSource
 
     @Binds
-    abstract fun bindLocationDataSource(locationDataSource: PlayServicesLocationDataSource): LocationDataSource
+    fun bindLocationDataSource(locationDataSource: PlayServicesLocationDataSource): LocationDataSource
 
     @Binds
-    abstract fun bindPermissionChecker(permissionChecker: AndroidPermissionChecker): PermissionChecker
+    fun bindPermissionChecker(permissionChecker: AndroidPermissionChecker): PermissionChecker
 
 }
+

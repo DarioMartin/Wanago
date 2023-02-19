@@ -7,7 +7,7 @@ import com.architectcoders.wanago.domain.tryCall
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import com.architectcoders.wanago.data.database.Event as DbEvent
+import com.architectcoders.wanago.data.database.DBEvent as DbEvent
 
 class EventRoomDataSource @Inject constructor(private val eventDao: EventDao) :
     EventsLocalDataSource {

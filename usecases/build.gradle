@@ -1,3 +1,5 @@
+import com.architectcoders.wanago.buildsrc.Libs
+
 plugins {
     id 'java-library'
     id 'org.jetbrains.kotlin.jvm'
@@ -6,6 +8,8 @@ plugins {
 dependencies {
     implementation project(":domain")
     implementation project(":data")
+    implementation Libs.JavaX.inject
+    implementation Libs.Kotlin.Coroutines.core
 }
 
 java {
