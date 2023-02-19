@@ -3,6 +3,7 @@ package com.architectcoders.wanago.presentation.eventdetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architectcoders.wanago.data.EventsRepository
+import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,14 +17,21 @@ import javax.inject.Inject
 class EventDetailsViewModel @Inject constructor(private val eventRepository: EventsRepository) :
     ViewModel() {
 
-    private val _event = MutableStateFlow<WanagoEvent?>(null)
-    val event: StateFlow<WanagoEvent?> = _event.asStateFlow()
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state.asStateFlow()
 
     fun loadEvent(eventId: String) {
         viewModelScope.launch {
+            _state.update { _state.value.copy(loading = true) }
             eventRepository.getEventById(eventId).collect { event ->
-                _event.update { event }
+                _state.update { UiState(event = event) }
             }
         }
     }
 }
+
+data class UiState(
+    val loading: Boolean = false,
+    val event: WanagoEvent? = null,
+    val error: WanagoError? = null
+)
