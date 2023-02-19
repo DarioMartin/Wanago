@@ -1,6 +1,6 @@
 package com.architectcoders.wanago.domain
 
-data class Event(
+data class WanagoEvent(
     val id: String,
     val name: String,
     val imageUrl: String,

@@ -9,6 +9,8 @@ dependencies {
     implementation project(":domain")
     implementation Libs.Kotlin.Coroutines.core
     implementation Libs.Arrow.library
+
+    implementation Libs.JavaX.inject
 }
 
 java {

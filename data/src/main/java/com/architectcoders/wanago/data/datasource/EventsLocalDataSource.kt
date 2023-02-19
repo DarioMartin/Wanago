@@ -1,13 +1,13 @@
 package com.architectcoders.wanago.data.datasource
 
 import com.architectcoders.wanago.domain.WanagoError
-import com.architectcoders.wanago.domain.Event
+import com.architectcoders.wanago.domain.WanagoEvent
 import kotlinx.coroutines.flow.Flow
 
 interface EventsLocalDataSource {
-    val events: Flow<List<Event>>
+    val events: Flow<List<WanagoEvent>>
 
     suspend fun isEmpty(): Boolean
-    fun getById(id: String): Flow<Event>
-    suspend fun save(events: List<Event>): WanagoError?
+    fun getById(id: String): Flow<WanagoEvent>
+    suspend fun save(events: List<WanagoEvent>): WanagoError?
 }
