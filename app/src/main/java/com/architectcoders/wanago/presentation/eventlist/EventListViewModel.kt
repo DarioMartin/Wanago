@@ -2,10 +2,11 @@ package com.architectcoders.wanago.presentation.eventlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.architectcoders.wanago.data.EventsRepository
 import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
-import com.architectcoders.wanago.domain.toError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -19,26 +20,21 @@ class EventListViewModel @Inject constructor(private val eventRepository: Events
     val state: StateFlow<UiState> = _state.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            eventRepository.nearbyEvents
-                .catch { cause -> _state.update { it.copy(error = cause.toError()) } }
-                .collect { events -> _state.update { UiState(events = events) } }
-        }
-
         getEvents()
     }
 
-    fun getEvents(forceUpdate: Boolean = false) {
+    fun getEvents() {
         viewModelScope.launch {
             _state.update { _state.value.copy(loading = true) }
-            val error = eventRepository.requestNearbyEvents(forceUpdate)
-            _state.update { _state.value.copy(loading = false, error = error) }
+            val flow = eventRepository.requestNearbyEvents().cachedIn(viewModelScope)
+            flow.collectLatest { pagingData -> _state.update { UiState(events = pagingData) } }
         }
     }
+
 }
 
 data class UiState(
     val loading: Boolean = false,
-    val events: List<WanagoEvent>? = null,
+    val events: PagingData<WanagoEvent>? = null,
     val error: WanagoError? = null
 )

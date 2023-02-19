@@ -1,17 +1,21 @@
 package com.architectcoders.wanago.presentation.eventlist
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.architectcoders.wanago.databinding.ItemEventBinding
 import com.architectcoders.wanago.domain.WanagoEvent
+import com.architectcoders.wanago.presentation.common.basicDiffUtil
 import com.bumptech.glide.Glide
 
-class EventsAdapter(private var events: List<WanagoEvent> = listOf()) :
-    RecyclerView.Adapter<EventViewHolder>() {
+class EventsAdapter : PagingDataAdapter<WanagoEvent, EventViewHolder>(
+    basicDiffUtil(
+        { old, new -> old.id == new.id },
+        { old, new -> old == new })
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val binding = ItemEventBinding.inflate(
@@ -21,16 +25,7 @@ class EventsAdapter(private var events: List<WanagoEvent> = listOf()) :
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val event = events[position]
-        holder.bind(event)
-    }
-
-    override fun getItemCount() = events.size
-    
-    @SuppressLint("NotifyDataSetChanged")
-    fun setEvents(events: List<WanagoEvent>) {
-        this.events = events
-        notifyDataSetChanged()
+        getItem(position)?.let { holder.bind(it) }
     }
 
 }

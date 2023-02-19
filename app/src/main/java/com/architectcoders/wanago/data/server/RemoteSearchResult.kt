@@ -3,7 +3,7 @@ package com.architectcoders.wanago.data.server
 import com.google.gson.annotations.SerializedName
 
 data class RemoteSearchResult(
-    @SerializedName("_embedded") val embedded: Embedded,
+    @SerializedName("_embedded") val embedded: Embedded?,
     @SerializedName("_links") val links: Map<String, Link>,
     val page: Page
 )

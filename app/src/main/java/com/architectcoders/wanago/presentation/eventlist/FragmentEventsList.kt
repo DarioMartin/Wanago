@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.architectcoders.wanago.databinding.FragmentEventsListBinding
 import com.architectcoders.wanago.presentation.common.launchAndCollect
 import com.architectcoders.wanago.presentation.common.setVisible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FragmentEventsList : Fragment() {
@@ -33,7 +35,7 @@ class FragmentEventsList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.swiper.setOnRefreshListener { viewModel.getEvents(forceUpdate = true) }
+        binding.swiper.setOnRefreshListener { viewModel.getEvents() }
 
         viewLifecycleOwner.launchAndCollect(viewModel.state) { state ->
             updateUiState(state)
@@ -53,12 +55,9 @@ class FragmentEventsList : Fragment() {
 
         binding.progress.setVisible(state.loading)
 
-        if (state.events?.isEmpty() == false) {
-            eventsAdapter.setEvents(state.events)
+        viewLifecycleOwner.lifecycleScope.launch {
+            state.events?.let { eventsAdapter.submitData(it) }
         }
-
-        binding.emptyListMessage.setVisible(state.events?.isEmpty() == true)
-
     }
 
 }

@@ -63,6 +63,13 @@ dependencies {
     implementation Libs.AndroidX.Navigation.fragmentKtx
     implementation Libs.AndroidX.Navigation.uiKtx
 
+    def paging_version = "3.1.1" //current version at the time
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    testImplementation "androidx.paging:paging-common:$paging_version"
+    implementation "androidx.paging:paging-rxjava2:$paging_version"
+    implementation "androidx.paging:paging-rxjava3:$paging_version"
+    implementation "androidx.paging:paging-guava:$paging_version"
+
     implementation Libs.AndroidX.Room.ktx
     implementation Libs.AndroidX.Room.library
     kapt Libs.AndroidX.Room.compiler

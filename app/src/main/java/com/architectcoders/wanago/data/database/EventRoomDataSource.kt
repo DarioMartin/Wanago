@@ -5,6 +5,7 @@ import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
 import com.architectcoders.wanago.domain.tryCall
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import com.architectcoders.wanago.data.database.Event as DbEvent
@@ -14,6 +15,9 @@ class EventRoomDataSource @Inject constructor(private val eventDao: EventDao) :
 
     override val events: Flow<List<WanagoEvent>> = eventDao.getAll().map { it.toDomainModel() }
 
+    override val favoriteEvents: Flow<List<WanagoEvent>> =
+        eventDao.getAll().filter { it.all { it.isFavorite } }.map { it.toDomainModel() }
+
     override suspend fun isEmpty(): Boolean = eventDao.eventCount() == 0
 
     override fun getById(id: String): Flow<WanagoEvent> =
@@ -22,6 +26,7 @@ class EventRoomDataSource @Inject constructor(private val eventDao: EventDao) :
     override suspend fun save(events: List<WanagoEvent>): WanagoError? = tryCall {
         eventDao.insertEvents(events.fromDomainModel())
     }.fold(ifLeft = { it }, ifRight = { null })
+
 }
 
 private fun List<DbEvent>.toDomainModel(): List<WanagoEvent> = map { it.toDomainModel() }

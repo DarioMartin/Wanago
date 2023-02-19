@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface EventsLocalDataSource {
     val events: Flow<List<WanagoEvent>>
+    val favoriteEvents: Flow<List<WanagoEvent>>
 
     suspend fun isEmpty(): Boolean
     fun getById(id: String): Flow<WanagoEvent>
