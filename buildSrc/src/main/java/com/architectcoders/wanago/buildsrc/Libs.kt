@@ -66,9 +66,10 @@ object Libs {
 
         object Paging {
             private const val version = "3.1.1"
-            const val library = "androidx.paging:paging-runtime:$version"
+            const val runtime = "androidx.paging:paging-runtime:$version"
             const val common = "androidx.paging:paging-common:$version"
         }
+
     }
 
     object PlayServicesLocation {

@@ -4,17 +4,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.architectcoders.wanago.data.EventsRepository
 import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
+import com.architectcoders.wanago.usecases.GetNearbyEventsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EventListViewModel @Inject constructor(private val eventRepository: EventsRepository) :
-    ViewModel() {
+class EventListViewModel @Inject constructor(
+    private val getNearbyEventsUseCase: GetNearbyEventsUseCase,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()
@@ -26,7 +27,7 @@ class EventListViewModel @Inject constructor(private val eventRepository: Events
     fun getEvents() {
         viewModelScope.launch {
             _state.update { _state.value.copy(loading = true) }
-            val flow = eventRepository.requestNearbyEvents().cachedIn(viewModelScope)
+            val flow = getNearbyEventsUseCase().cachedIn(viewModelScope)
             flow.collectLatest { pagingData -> _state.update { UiState(events = pagingData) } }
         }
     }
@@ -38,3 +39,4 @@ data class UiState(
     val events: PagingData<WanagoEvent>? = null,
     val error: WanagoError? = null
 )
+
