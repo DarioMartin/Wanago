@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.architectcoders.wanago.databinding.FragmentEventDetailsBinding
-import com.architectcoders.wanago.domain.WanagoEvent
 import com.architectcoders.wanago.presentation.common.launchAndCollect
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,18 +39,21 @@ class EventDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewLifecycleOwner.launchAndCollect(viewModel.event) { event ->
-            event?.let { paintEventDetails(it) }
+        viewLifecycleOwner.launchAndCollect(viewModel.state) { uiState ->
+            updateUiState(uiState)
         }
 
         viewModel.loadEvent(eventId)
 
     }
 
-    private fun paintEventDetails(event: WanagoEvent) {
-        binding.detailsEventName.text = event.name
-        binding.detailsEventVenue.text = event.venue
-        Glide.with(requireContext()).load(event.imageUrl).into(binding.eventImage)
+    private fun updateUiState(uiState: UiState) {
+        uiState.event?.let { event ->
+            binding.detailsEventName.text = event.name
+            binding.detailsEventVenue.text = event.venue
+            Glide.with(requireContext()).load(event.imageUrl).into(binding.eventImage)
+        }
     }
+
 
 }
