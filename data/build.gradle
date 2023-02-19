@@ -9,9 +9,9 @@ dependencies {
     implementation project(":domain")
     implementation Libs.Kotlin.Coroutines.core
     implementation Libs.Arrow.library
-
     implementation Libs.JavaX.inject
-    implementation 'androidx.paging:paging-common-ktx:3.1.1'
+
+    implementation Libs.AndroidX.Paging.common
 }
 
 java {
