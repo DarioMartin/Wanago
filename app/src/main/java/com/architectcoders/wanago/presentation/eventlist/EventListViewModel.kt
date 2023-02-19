@@ -42,3 +42,4 @@ data class UiState(
     val events: List<WanagoEvent>? = null,
     val error: WanagoError? = null
 )
+

@@ -718,3 +718,4 @@ style:
     active: true
     excludeImports:
       - 'java.util.*'
+      - 'kotlinx.coroutines.flow.*'
