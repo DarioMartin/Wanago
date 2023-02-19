@@ -4,36 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.architectcoders.wanago.BuildConfig
-import com.architectcoders.wanago.data.AndroidPermissionChecker
-import com.architectcoders.wanago.data.EventsRepository
-import com.architectcoders.wanago.data.PlayServicesLocationDataSource
-import com.architectcoders.wanago.data.RegionRepository
-import com.architectcoders.wanago.data.database.EventRoomDataSource
-import com.architectcoders.wanago.data.server.TicketMasterDataSource
 import com.architectcoders.wanago.databinding.FragmentEventsListBinding
-import com.architectcoders.wanago.presentation.common.app
+import com.architectcoders.wanago.presentation.common.launchAndCollect
+import com.architectcoders.wanago.presentation.common.setVisible
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FragmentEventsList : Fragment() {
 
     private var _binding: FragmentEventsListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: EventListViewModel by viewModels {
-        val application = requireActivity().app
-        EventListViewModelFactory(
-            EventsRepository(
-                RegionRepository(
-                    PlayServicesLocationDataSource(application),
-                    AndroidPermissionChecker(application)),
-                EventRoomDataSource(requireActivity().app.db.eventDao()),
-                TicketMasterDataSource(BuildConfig.ticketMasterApiKey))
-        )
-    }
+    private val viewModel: EventListViewModel by viewModels()
 
     private lateinit var eventsAdapter: EventsAdapter
 
@@ -48,10 +33,10 @@ class FragmentEventsList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipeToRefresh()
+        binding.swiper.setOnRefreshListener { viewModel.getEvents(forceUpdate = true) }
 
-        viewModel.events.observe(viewLifecycleOwner) { events ->
-            eventsAdapter.setEvents(events)
+        viewLifecycleOwner.launchAndCollect(viewModel.state) { state ->
+            updateUiState(state)
         }
 
         eventsAdapter = EventsAdapter()
@@ -63,11 +48,16 @@ class FragmentEventsList : Fragment() {
         }
     }
 
-    private fun swipeToRefresh() {
+    private fun updateUiState(state: UiState) {
+        binding.swiper.isRefreshing = false
 
-        binding.swiper.setOnRefreshListener {
-            binding.swiper.isRefreshing = false
+        binding.progress.setVisible(state.loading)
+
+        if (state.events?.isEmpty() == false) {
+            eventsAdapter.setEvents(state.events)
         }
+
+        binding.emptyListMessage.setVisible(state.events?.isEmpty() == true)
 
     }
 

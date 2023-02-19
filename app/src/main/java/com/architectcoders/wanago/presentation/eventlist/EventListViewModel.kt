@@ -1,25 +1,44 @@
 package com.architectcoders.wanago.presentation.eventlist
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architectcoders.wanago.data.EventsRepository
-import com.architectcoders.wanago.domain.Event
-import kotlinx.coroutines.flow.first
+import com.architectcoders.wanago.domain.WanagoError
+import com.architectcoders.wanago.domain.WanagoEvent
+import com.architectcoders.wanago.domain.toError
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EventListViewModel(private val eventRepository: EventsRepository) : ViewModel() {
-    private val _events = MutableLiveData<List<Event>>()
-    val events: LiveData<List<Event>> get() = _events
+@HiltViewModel
+class EventListViewModel @Inject constructor(private val eventRepository: EventsRepository) :
+    ViewModel() {
+
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state.asStateFlow()
 
     init {
+        viewModelScope.launch {
+            eventRepository.nearbyEvents
+                .catch { cause -> _state.update { it.copy(error = cause.toError()) } }
+                .collect { events -> _state.update { UiState(events = events) } }
+        }
+
         getEvents()
     }
 
-    private fun getEvents() {
+    fun getEvents(forceUpdate: Boolean = false) {
         viewModelScope.launch {
-            _events.value = eventRepository.nearbyEvents.first()
+            _state.update { _state.value.copy(loading = true) }
+            val error = eventRepository.requestNearbyEvents(forceUpdate)
+            _state.update { _state.value.copy(loading = false, error = error) }
         }
     }
 }
+
+data class UiState(
+    val loading: Boolean = false,
+    val events: List<WanagoEvent>? = null,
+    val error: WanagoError? = null
+)
