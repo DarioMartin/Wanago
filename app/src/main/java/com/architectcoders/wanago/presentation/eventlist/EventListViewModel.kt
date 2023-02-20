@@ -3,8 +3,6 @@ package com.architectcoders.wanago.presentation.eventlist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.map
 import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
 import com.architectcoders.wanago.usecases.GetFavoriteEventsUseCase
@@ -32,19 +30,9 @@ class EventListViewModel @Inject constructor(
     fun getEvents() {
         viewModelScope.launch {
             _state.update { _state.value.copy(loading = true) }
-
-            val favoriteEventsFlow = getFavoriteEventsUseCase()
-            val nearbyEventsFlow = getNearbyEventsUseCase().cachedIn(this)
-
-            val combinedFlow = nearbyEventsFlow.combine(favoriteEventsFlow) { remoteEvents, favoriteEvents ->
-                val combinedEvents = remoteEvents.map { remoteEvent ->
-                    val isFavorite = favoriteEvents.any { it.id == remoteEvent.id }
-                    remoteEvent.copy(isFavorite = isFavorite)
-                }
-                combinedEvents
+            getNearbyEventsUseCase.invoke(this).collectLatest { pagingData ->
+                _state.update { UiState(events = pagingData) }
             }
-
-            combinedFlow.collectLatest { pagingData -> _state.update { UiState(events = pagingData) } }
         }
     }
 
