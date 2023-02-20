@@ -41,7 +41,9 @@ class FragmentEventsList : Fragment() {
             updateUiState(state)
         }
 
-        eventsAdapter = EventsAdapter()
+        eventsAdapter = EventsAdapter {
+            viewModel.switchFavorite(it)
+        }
 
         binding.recyclerEventsList.apply {
             this.layoutManager = LinearLayoutManager(context)
