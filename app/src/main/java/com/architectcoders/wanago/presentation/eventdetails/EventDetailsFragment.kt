@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.architectcoders.wanago.R
 import com.architectcoders.wanago.databinding.FragmentEventDetailsBinding
 import com.architectcoders.wanago.presentation.common.launchAndCollect
 import com.bumptech.glide.Glide
@@ -51,6 +53,14 @@ class EventDetailsFragment : Fragment() {
         uiState.event?.let { event ->
             binding.detailsEventName.text = event.name
             binding.detailsEventVenue.text = event.venue
+
+            val favRes =
+                if (event.isFavorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+            binding.favoriteButton.apply {
+                setImageDrawable(ContextCompat.getDrawable(requireContext(), favRes))
+                setOnClickListener { viewModel.switchFavorite(event) }
+            }
+
             Glide.with(requireContext()).load(event.imageUrl).into(binding.eventImage)
         }
     }

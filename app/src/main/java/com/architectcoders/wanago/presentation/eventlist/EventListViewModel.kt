@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
-import com.architectcoders.wanago.usecases.GetFavoriteEventsUseCase
 import com.architectcoders.wanago.usecases.GetNearbyEventsUseCase
 import com.architectcoders.wanago.usecases.SwitchEventFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EventListViewModel @Inject constructor(
     private val getNearbyEventsUseCase: GetNearbyEventsUseCase,
-    private val switchEventFavoriteUseCase: SwitchEventFavoriteUseCase,
-    private val getFavoriteEventsUseCase: GetFavoriteEventsUseCase
+    private val switchEventFavoriteUseCase: SwitchEventFavoriteUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(UiState())
