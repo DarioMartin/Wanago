@@ -2,9 +2,10 @@ package com.architectcoders.wanago.presentation.eventdetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.architectcoders.wanago.data.EventsRepository
 import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
+import com.architectcoders.wanago.usecases.GetEventByIdUseCase
+import com.architectcoders.wanago.usecases.SwitchEventFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EventDetailsViewModel @Inject constructor(private val eventRepository: EventsRepository) :
+class EventDetailsViewModel @Inject constructor(
+    private val getEventByIdUseCase: GetEventByIdUseCase,
+    private val switchEventFavoriteUseCase: SwitchEventFavoriteUseCase
+) :
     ViewModel() {
 
     private val _state = MutableStateFlow(UiState())
@@ -23,9 +27,15 @@ class EventDetailsViewModel @Inject constructor(private val eventRepository: Eve
     fun loadEvent(eventId: String) {
         viewModelScope.launch {
             _state.update { _state.value.copy(loading = true) }
-            eventRepository.getEventById(eventId).collect { event ->
+            getEventByIdUseCase(eventId).collect { event ->
                 _state.update { UiState(event = event) }
             }
+        }
+    }
+
+    fun switchFavorite(event: WanagoEvent) {
+        viewModelScope.launch {
+            switchEventFavoriteUseCase(event)
         }
     }
 }

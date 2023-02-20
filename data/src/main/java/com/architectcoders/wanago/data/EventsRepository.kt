@@ -8,11 +8,11 @@ import com.architectcoders.wanago.data.datasource.EventsRemoteDataSource
 import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class EventsRepository @Inject constructor(
     private val regionRepository: RegionRepository,
     private val localDataSource: EventsLocalDataSource,
@@ -41,7 +41,16 @@ class EventsRepository @Inject constructor(
         return combinedFlow
     }
 
-    fun getEventById(id: String): Flow<WanagoEvent> = localDataSource.getById(id)
+    fun getEventById(id: String): Flow<WanagoEvent> {
+        return flow {
+            emit(remoteDataSource.getEventById(id))
+        }.transformLatest { event ->
+            getFavoriteEvents().collect { favoriteEvents ->
+                val isFavorite = favoriteEvents.any { it.id == id }
+                emit(event.copy(isFavorite = isFavorite))
+            }
+        }
+    }
 
     suspend fun switchFavorite(event: WanagoEvent): WanagoError? {
         val updatedEvent = event.copy(isFavorite = !event.isFavorite)
