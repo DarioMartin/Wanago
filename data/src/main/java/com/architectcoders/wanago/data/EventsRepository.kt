@@ -23,22 +23,20 @@ class EventsRepository @Inject constructor(
         it.filter { event -> event.isFavorite }
     }
 
-    suspend fun requestNearbyEvents(coroutineScope: CoroutineScope): Flow<PagingData<WanagoEvent>> {
+    suspend fun requestNearbyEvents(scope: CoroutineScope): Flow<PagingData<WanagoEvent>> {
         val favoriteEventsFlow = getFavoriteEvents()
 
-        val nearbyEventsFlow = remoteDataSource.findNearbyEvents(regionRepository.findLastRegion())
-            .cachedIn(coroutineScope)
+        val nearbyEventsFlow =
+            remoteDataSource.findNearbyEvents(regionRepository.findLastRegion())
+                .cachedIn(scope)
 
-        val combinedFlow =
-            nearbyEventsFlow.combine(favoriteEventsFlow) { remoteEvents, favoriteEvents ->
-                val combinedEvents = remoteEvents.map { remoteEvent ->
-                    val isFavorite = favoriteEvents.any { it.id == remoteEvent.id }
-                    remoteEvent.copy(isFavorite = isFavorite)
-                }
-                combinedEvents
+        return nearbyEventsFlow.combine(favoriteEventsFlow) { remoteEvents, favoriteEvents ->
+            remoteEvents.map { remoteEvent ->
+                val isFavorite = favoriteEvents.any { it.id == remoteEvent.id }
+                remoteEvent.copy(isFavorite = isFavorite)
             }
+        }
 
-        return combinedFlow
     }
 
     fun getEventById(id: String): Flow<WanagoEvent> {

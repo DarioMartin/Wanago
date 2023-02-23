@@ -15,19 +15,18 @@ class TicketMasterDataSource @Inject constructor(@ApiKey private val apiKey: Str
     EventsRemoteDataSource {
 
     override fun findNearbyEvents(region: String): Flow<PagingData<WanagoEvent>> {
-        return Pager(config = PagingConfig(
-            pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false
-        ), pagingSourceFactory = {
-            EventsPagingSource(service = RemoteConnection.service, region, apiKey)
-        }).flow
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            pagingSourceFactory = {
+                EventsPagingSource(service = RemoteConnection.service, region, apiKey)
+            }
+        ).flow
     }
 
     override suspend fun getEventById(id: String): WanagoEvent {
         return RemoteConnection.service.getEventById(id, apiKey).toDomainModel()
     }
 }
-
-private fun List<RemoteEvent>.toDomainModel(): List<WanagoEvent> = map { it.toDomainModel() }
 
 fun RemoteEvent.toDomainModel(): WanagoEvent = WanagoEvent(
     id,
