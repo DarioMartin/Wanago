@@ -1,9 +1,10 @@
 package com.architectcoders.wanago.data.datasource
 
-import arrow.core.Either
+import androidx.paging.PagingData
 import com.architectcoders.wanago.domain.WanagoEvent
-import com.architectcoders.wanago.domain.WanagoError
+import kotlinx.coroutines.flow.Flow
 
 interface EventsRemoteDataSource {
-    suspend fun findNearbyEvents(region: String): Either<WanagoError, List<WanagoEvent>>
+    fun findNearbyEvents(region: String): Flow<PagingData<WanagoEvent>>
+    suspend fun getEventById(id: String): WanagoEvent
 }

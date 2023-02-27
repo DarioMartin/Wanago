@@ -1,11 +1,13 @@
 package com.architectcoders.wanago.presentation.common
 
+
 import android.content.Context
 import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.DiffUtil
 import com.architectcoders.wanago.App
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -35,5 +37,16 @@ fun View.visible() {
 
 fun View.gone() {
     visibility = View.GONE
+}
+
+inline fun <T> basicDiffUtil(
+    crossinline areItemsTheSame: (T, T) -> Boolean = { old, new -> old == new },
+    crossinline areContentsTheSame: (T, T) -> Boolean = { old, new -> old == new }
+) = object : DiffUtil.ItemCallback<T>() {
+    override fun areItemsTheSame(oldItem: T & Any, newItem: T & Any) =
+        areItemsTheSame(oldItem, newItem)
+
+    override fun areContentsTheSame(oldItem: T & Any, newItem: T & Any) =
+        areContentsTheSame(oldItem, newItem)
 }
 

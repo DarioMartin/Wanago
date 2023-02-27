@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface EventsLocalDataSource {
     val events: Flow<List<WanagoEvent>>
-
     suspend fun isEmpty(): Boolean
     fun getById(id: String): Flow<WanagoEvent>
     suspend fun save(events: List<WanagoEvent>): WanagoError?
