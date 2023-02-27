@@ -22,6 +22,7 @@ class EventRoomDataSource @Inject constructor(private val eventDao: EventDao) :
     override suspend fun save(events: List<WanagoEvent>): WanagoError? = tryCall {
         eventDao.insertEvents(events.fromDomainModel())
     }.fold(ifLeft = { it }, ifRight = { null })
+
 }
 
 private fun List<DbEvent>.toDomainModel(): List<WanagoEvent> = map { it.toDomainModel() }

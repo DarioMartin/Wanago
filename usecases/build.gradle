@@ -10,6 +10,9 @@ dependencies {
     implementation project(":data")
     implementation Libs.JavaX.inject
     implementation Libs.Kotlin.Coroutines.core
+
+    implementation Libs.AndroidX.Paging.common
+
 }
 
 java {

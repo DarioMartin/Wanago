@@ -41,7 +41,8 @@ object Libs {
             private const val version = "2.5.3"
             const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
-            const val gradlePlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
+            const val gradlePlugin =
+                "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
         }
 
         object Room {
@@ -62,6 +63,13 @@ object Libs {
                 const val core = "androidx.test.espresso:espresso-core:$version"
             }
         }
+
+        object Paging {
+            private const val version = "3.1.1"
+            const val runtime = "androidx.paging:paging-runtime:$version"
+            const val common = "androidx.paging:paging-common-ktx:$version"
+        }
+
     }
 
     object PlayServicesLocation {
