@@ -5,5 +5,7 @@ data class WanagoEvent(
     val name: String,
     val imageUrl: String,
     val venue: String,
+    val date: String,
+    val summary: String,
     val isFavorite: Boolean = false
 )
