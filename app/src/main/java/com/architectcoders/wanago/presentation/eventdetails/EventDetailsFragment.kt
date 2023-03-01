@@ -52,7 +52,8 @@ class EventDetailsFragment : Fragment() {
     private fun updateUiState(uiState: UiState) {
         uiState.event?.let { event ->
             binding.detailsEventName.text = event.name
-            binding.detailsEventVenue.text = event.venue
+            binding.detailsEventTimeAndPlace.text = "${event.venue} - ${event.date}"
+            binding.detailsEventSummary.text = event.summary
 
             val favRes =
                 if (event.isFavorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off

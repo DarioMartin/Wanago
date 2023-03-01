@@ -5,6 +5,6 @@ import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
 class GetNearbyEventsUseCase @Inject constructor(private val repository: EventsRepository) {
-    suspend operator fun invoke(scope: CoroutineScope) = repository.requestNearbyEvents(scope)
+    suspend operator fun invoke() = repository.requestNearbyEvents()
 }
 

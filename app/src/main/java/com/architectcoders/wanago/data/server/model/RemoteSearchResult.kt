@@ -1,4 +1,4 @@
-package com.architectcoders.wanago.data.server
+package com.architectcoders.wanago.data.server.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -30,7 +30,7 @@ data class RemoteEvent(
     val images: List<Image>,
     val locale: String,
     val name: String,
-    val pleaseNote: String,
+    val pleaseNote: String?,
     val priceRanges: List<PriceRange>,
     val products: List<Product>,
     val promoter: Promoter,
@@ -282,8 +282,8 @@ data class Start(
     val dateTBA: Boolean,
     val dateTBD: Boolean,
     val dateTime: String,
-    val localDate: String,
-    val localTime: String,
+    val localDate: String?,
+    val localTime: String?,
     val noSpecificTime: Boolean,
     val timeTBA: Boolean
 )

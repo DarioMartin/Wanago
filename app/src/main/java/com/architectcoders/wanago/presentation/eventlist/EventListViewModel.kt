@@ -3,6 +3,7 @@ package com.architectcoders.wanago.presentation.eventlist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.architectcoders.wanago.domain.WanagoError
 import com.architectcoders.wanago.domain.WanagoEvent
 import com.architectcoders.wanago.usecases.GetNearbyEventsUseCase
@@ -28,7 +29,7 @@ class EventListViewModel @Inject constructor(
     fun getEvents() {
         viewModelScope.launch {
             _state.update { _state.value.copy(loading = true) }
-            getNearbyEventsUseCase.invoke(this).collectLatest { pagingData ->
+            getNearbyEventsUseCase.invoke().cachedIn(this).collectLatest { pagingData ->
                 _state.update { UiState(events = pagingData) }
             }
         }

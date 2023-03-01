@@ -1,5 +1,8 @@
 package com.architectcoders.wanago.data.server
 
+import com.architectcoders.wanago.data.server.model.RemoteEvent
+import com.architectcoders.wanago.data.server.model.RemoteSearchResult
+
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
