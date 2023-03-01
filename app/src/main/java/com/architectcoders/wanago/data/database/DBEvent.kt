@@ -9,4 +9,6 @@ data class DBEvent(
     val name: String,
     val imageUrl: String,
     val venue: String,
+    val date: String,
+    val summary: String,
     val isFavorite: Boolean)

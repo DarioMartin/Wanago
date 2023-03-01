@@ -51,7 +51,19 @@
             tools:text="Artist name" />
 
         <TextView
-            android:id="@+id/details_event_venue"
+            android:id="@+id/details_event_time_and_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:lineSpacingExtra="4sp"
+            android:padding="3dp"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/details_event_name"
+            tools:text="Place" />
+
+        <TextView
+            android:id="@+id/details_event_summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -59,7 +71,7 @@
             android:lineSpacingExtra="4sp"
             android:padding="3dp"
             android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/details_event_name"
+            app:layout_constraintTop_toBottomOf="@id/details_event_time_and_place"
             tools:text="Place" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
