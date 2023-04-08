@@ -15,11 +15,11 @@ const val NETWORK_PAGE_SIZE = 25
 class TicketMasterDataSource @Inject constructor(@ApiKey private val apiKey: String) :
     EventsRemoteDataSource {
 
-    override fun findNearbyEvents(region: String): Flow<PagingData<WanagoEvent>> {
+    override fun findNearbyEvents(region: String, query: String?): Flow<PagingData<WanagoEvent>> {
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
             pagingSourceFactory = {
-                EventsPagingSource(service = RemoteConnection.service, region, apiKey)
+                EventsPagingSource(service = RemoteConnection.service, region, query, apiKey)
             }
         ).flow
     }

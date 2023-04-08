@@ -10,7 +10,10 @@ private const val STARTING_PAGE_INDEX = 0
 
 
 class EventsPagingSource(
-    private val service: RemoteService, private val region: String, private val apiKey: String
+    private val service: RemoteService,
+    private val region: String,
+    private val query: String?,
+    private val apiKey: String
 ) : PagingSource<Int, WanagoEvent>() {
 
 
@@ -18,7 +21,7 @@ class EventsPagingSource(
         val pageIndex = params.key ?: STARTING_PAGE_INDEX
 
         return try {
-            val response = service.listNearbyEvents(apiKey, region, pageIndex, NETWORK_PAGE_SIZE)
+            val response = service.listNearbyEvents(apiKey, region, query, pageIndex, NETWORK_PAGE_SIZE)
 
             val events = response.embedded?.events ?: emptyList()
             val nextPage = if (events.isEmpty()) null else response.page.number + 1

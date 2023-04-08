@@ -12,6 +12,7 @@ interface RemoteService {
     suspend fun listNearbyEvents(
         @Query("apikey") apiKey: String,
         @Query("city") city: String,
+        @Query("keyword") query: String?,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): RemoteSearchResult

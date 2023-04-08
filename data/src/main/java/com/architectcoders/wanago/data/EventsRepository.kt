@@ -23,10 +23,10 @@ class EventsRepository @Inject constructor(
         it.filter { event -> event.isFavorite }
     }
 
-    suspend fun requestNearbyEvents(coroutineScope: CoroutineScope): Flow<PagingData<WanagoEvent>> {
+    suspend fun requestNearbyEvents(coroutineScope: CoroutineScope, query: String?): Flow<PagingData<WanagoEvent>> {
         val favoriteEventsFlow = getFavoriteEvents()
 
-        val nearbyEventsFlow = remoteDataSource.findNearbyEvents(regionRepository.findLastRegion())
+        val nearbyEventsFlow = remoteDataSource.findNearbyEvents(regionRepository.findLastRegion(), query)
             .cachedIn(coroutineScope)
 
         return nearbyEventsFlow.combine(favoriteEventsFlow) { remoteEvents, favoriteEvents ->
