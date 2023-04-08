@@ -21,6 +21,8 @@ class EventListViewModel @Inject constructor(
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()
 
+    private var searchQuery: String? = null
+
     init {
         getEvents()
     }
@@ -28,7 +30,8 @@ class EventListViewModel @Inject constructor(
     fun getEvents() {
         viewModelScope.launch {
             _state.update { _state.value.copy(loading = true) }
-            getNearbyEventsUseCase.invoke(this).collectLatest { pagingData ->
+
+            getNearbyEventsUseCase.invoke(this, searchQuery).collectLatest { pagingData ->
                 _state.update { UiState(events = pagingData) }
             }
         }
@@ -38,6 +41,11 @@ class EventListViewModel @Inject constructor(
         viewModelScope.launch {
             switchEventFavoriteUseCase(event)
         }
+    }
+
+    fun setSearchQuery(newQuery: String?) {
+        searchQuery = newQuery
+        getEvents()
     }
 
 }

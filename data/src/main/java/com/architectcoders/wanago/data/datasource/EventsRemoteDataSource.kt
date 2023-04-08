@@ -5,6 +5,6 @@ import com.architectcoders.wanago.domain.WanagoEvent
 import kotlinx.coroutines.flow.Flow
 
 interface EventsRemoteDataSource {
-    fun findNearbyEvents(region: String): Flow<PagingData<WanagoEvent>>
+    fun findNearbyEvents(region: String, query: String?): Flow<PagingData<WanagoEvent>>
     suspend fun getEventById(id: String): WanagoEvent
 }

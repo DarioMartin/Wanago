@@ -38,7 +38,11 @@ class EventViewHolder(private val binding: ItemEventBinding) :
     fun bind(event: WanagoEvent, favListener: (WanagoEvent) -> Unit) {
         binding.eventName.text = event.name
         binding.eventVenue.text = event.venue
-        Glide.with(itemView.context).load(event.imageUrl).into(binding.eventImage)
+        Glide.with(itemView.context)
+            .load(event.imageUrl)
+            .placeholder(R.mipmap.ic_launcher_foreground)
+            .error(R.mipmap.ic_launcher_foreground)
+            .into(binding.eventImage)
 
         val favRes = if (event.isFavorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
         binding.favoriteButton.apply {
