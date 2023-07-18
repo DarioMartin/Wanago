@@ -23,10 +23,16 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    private const val NETWORK_PAGE_SIZE = 25
+
     @Provides
     @Singleton
     @ApiKey
     fun provideApiKey(): String = BuildConfig.ticketMasterApiKey
+
+    @Provides
+    @NetworkPageSize
+    fun provideNetworkPageSize(): Int = NETWORK_PAGE_SIZE
 
     @Provides
     @Singleton
