@@ -13,7 +13,7 @@ import com.architectcoders.wanago.domain.WanagoEvent
 import com.architectcoders.wanago.presentation.common.basicDiffUtil
 import com.bumptech.glide.Glide
 
-class EventsAdapter(private val favListener: (WanagoEvent) -> Unit) :
+class EventsAdapter(private val onFavButtonClick: (WanagoEvent) -> Unit) :
     PagingDataAdapter<WanagoEvent, EventViewHolder>(
         basicDiffUtil(
             { old, new -> old.id == new.id },
@@ -28,14 +28,14 @@ class EventsAdapter(private val favListener: (WanagoEvent) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it, favListener) }
+        getItem(position)?.let { holder.bind(it, onFavButtonClick) }
     }
 
 }
 
 class EventViewHolder(private val binding: ItemEventBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(event: WanagoEvent, favListener: (WanagoEvent) -> Unit) {
+    fun bind(event: WanagoEvent, onFavButtonClick: (WanagoEvent) -> Unit) {
         binding.eventName.text = event.name
         binding.eventVenue.text = event.venue
         Glide.with(itemView.context).load(event.imageUrl).into(binding.eventImage)
@@ -43,7 +43,7 @@ class EventViewHolder(private val binding: ItemEventBinding) :
         val favRes = if (event.isFavorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
         binding.favoriteButton.apply {
             setImageDrawable(ContextCompat.getDrawable(itemView.context, favRes))
-            setOnClickListener { favListener(event) }
+            setOnClickListener { onFavButtonClick(event) }
         }
 
         itemView.setOnClickListener { view -> navigateToDetails(view, event) }

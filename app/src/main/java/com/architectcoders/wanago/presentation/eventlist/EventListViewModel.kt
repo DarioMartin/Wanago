@@ -8,7 +8,11 @@ import com.architectcoders.wanago.domain.WanagoEvent
 import com.architectcoders.wanago.usecases.GetNearbyEventsUseCase
 import com.architectcoders.wanago.usecases.SwitchEventFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +29,17 @@ class EventListViewModel @Inject constructor(
         getEvents()
     }
 
-    fun getEvents() {
+    fun onSwipeToRefresh() {
+        getEvents()
+    }
+
+    fun onFavButtonClick(event: WanagoEvent) {
+        viewModelScope.launch {
+            switchEventFavoriteUseCase(event)
+        }
+    }
+
+    private fun getEvents() {
         viewModelScope.launch {
             _state.update { _state.value.copy(loading = true) }
             getNearbyEventsUseCase.invoke(this).collectLatest { pagingData ->
@@ -33,13 +47,6 @@ class EventListViewModel @Inject constructor(
             }
         }
     }
-
-    fun switchFavorite(event: WanagoEvent) {
-        viewModelScope.launch {
-            switchEventFavoriteUseCase(event)
-        }
-    }
-
 }
 
 data class UiState(
@@ -47,4 +54,3 @@ data class UiState(
     val events: PagingData<WanagoEvent>? = null,
     val error: WanagoError? = null
 )
-
