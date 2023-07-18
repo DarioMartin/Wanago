@@ -10,12 +10,11 @@ dependencies {
     implementation Libs.Kotlin.Coroutines.core
     implementation Libs.Arrow.library
     implementation Libs.JavaX.inject
-
     implementation Libs.AndroidX.Paging.common
 
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
