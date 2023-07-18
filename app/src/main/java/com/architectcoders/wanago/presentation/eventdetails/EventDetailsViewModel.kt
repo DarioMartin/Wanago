@@ -18,13 +18,12 @@ import javax.inject.Inject
 class EventDetailsViewModel @Inject constructor(
     private val getEventByIdUseCase: GetEventByIdUseCase,
     private val switchEventFavoriteUseCase: SwitchEventFavoriteUseCase
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()
 
-    fun loadEvent(eventId: String) {
+    fun onViewCreated(eventId: String) {
         viewModelScope.launch {
             _state.update { _state.value.copy(loading = true) }
             getEventByIdUseCase(eventId).collect { event ->
@@ -33,7 +32,7 @@ class EventDetailsViewModel @Inject constructor(
         }
     }
 
-    fun switchFavorite(event: WanagoEvent) {
+    fun onFavButtonClick(event: WanagoEvent) {
         viewModelScope.launch {
             switchEventFavoriteUseCase(event)
         }
