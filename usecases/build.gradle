@@ -13,6 +13,10 @@ dependencies {
     implementation Libs.AndroidX.Paging.common
 
     testImplementation project(":testShared")
+    testImplementation Libs.JUnit.library
+    testImplementation Libs.Mockito.kotlin
+    testImplementation Libs.Mockito.inline
+    testImplementation Libs.Kotlin.Coroutines.test
 }
 
 java {
