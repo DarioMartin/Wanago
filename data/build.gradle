@@ -12,6 +12,7 @@ dependencies {
     implementation Libs.JavaX.inject
     implementation Libs.AndroidX.Paging.common
 
+    testImplementation project(":testShared")
 }
 
 java {
