@@ -15,6 +15,7 @@ object Libs {
         object Coroutines {
             private const val version = "1.6.0"
             const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+            const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
         }
     }
 
@@ -53,15 +54,24 @@ object Libs {
         }
 
         object Test {
+            private const val version = "1.5.0"
+            const val runner = "androidx.test:runner:$version"
+            const val rules = "androidx.test:rules:$version"
+
             object Ext {
                 private const val version = "1.1.5"
-                const val junit = "androidx.test.ext:junit:$version"
+                const val junit = "androidx.test.ext:junit-ktx:$version"
             }
 
             object Espresso {
                 private const val version = "3.5.1"
-                const val core = "androidx.test.espresso:espresso-core:$version"
+                const val contrib = "androidx.test.espresso:espresso-contrib:$version"
             }
+        }
+
+        object Espresso {
+            private const val version = "3.5.1"
+            const val core = "androidx.test.espresso:espresso-core:$version"
         }
 
         object Paging {
@@ -69,7 +79,6 @@ object Libs {
             const val runtime = "androidx.paging:paging-runtime:$version"
             const val common = "androidx.paging:paging-common-ktx:$version"
         }
-
     }
 
     object PlayServicesLocation {
@@ -86,6 +95,7 @@ object Libs {
     object OkHttp3 {
         private const val version = "4.10.0"
         const val loginInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
+        const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$version"
     }
 
     object Retrofit {
@@ -104,11 +114,17 @@ object Libs {
         const val library = "junit:junit:$version"
     }
 
+    object Mockito {
+        const val kotlin = "org.mockito.kotlin:mockito-kotlin:5.0.0"
+        const val inline = "org.mockito:mockito-inline:5.2.0"
+    }
+
     object Hilt {
         private const val version = "2.45"
         const val android = "com.google.dagger:hilt-android:$version"
         const val compiler = "com.google.dagger:hilt-compiler:$version"
         const val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
+        const val test = "com.google.dagger:hilt-android-testing:$version"
     }
 
 
@@ -116,4 +132,5 @@ object Libs {
         const val inject = "javax.inject:javax.inject:1"
     }
 
+    const val turbine = "app.cash.turbine:turbine:0.7.0"
 }
