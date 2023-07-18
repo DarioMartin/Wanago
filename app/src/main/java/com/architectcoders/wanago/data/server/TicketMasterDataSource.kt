@@ -13,20 +13,21 @@ import javax.inject.Inject
 
 class TicketMasterDataSource @Inject constructor(
   @ApiKey private val apiKey: String,
-  @NetworkPageSize private val networkPageSize: Int
+  @NetworkPageSize private val networkPageSize: Int,
+  private val service: RemoteService
 ) : EventsRemoteDataSource {
 
     override fun findNearbyEvents(region: String): Flow<PagingData<WanagoEvent>> {
         return Pager(
             config = PagingConfig(pageSize = networkPageSize, enablePlaceholders = false),
             pagingSourceFactory = {
-                EventsPagingSource(apiKey, networkPageSize, RemoteConnection.service, region)
+                EventsPagingSource(apiKey, networkPageSize, service, region)
             }
         ).flow
     }
 
     override suspend fun getEventById(id: String): WanagoEvent {
-        return RemoteConnection.service.getEventById(id, apiKey).toDomainModel()
+        return service.getEventById(id, apiKey).toDomainModel()
     }
 }
 
