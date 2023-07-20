@@ -9,7 +9,7 @@ object Libs {
     const val gradleVersionsPlugin = "com.github.ben-manes:gradle-versions-plugin:0.45.0"
 
     object Kotlin {
-        private const val version = "1.8.10"
+        private const val version = "1.8.22"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
 
         object Coroutines {
@@ -21,7 +21,7 @@ object Libs {
 
     object AndroidX {
 
-        const val coreKtx = "androidx.core:core-ktx:1.9.0"
+        const val coreKtx = "androidx.core:core-ktx:1.10.1"
         const val appCompat = "androidx.appcompat:appcompat:1.6.1"
         const val recyclerView = "androidx.recyclerview:recyclerview:1.2.1"
         const val material = "com.google.android.material:material:1.8.0"
