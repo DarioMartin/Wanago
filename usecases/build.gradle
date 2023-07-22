@@ -10,12 +10,16 @@ dependencies {
     implementation project(":data")
     implementation Libs.JavaX.inject
     implementation Libs.Kotlin.Coroutines.core
-
     implementation Libs.AndroidX.Paging.common
 
+    testImplementation project(":testShared")
+    testImplementation Libs.JUnit.library
+    testImplementation Libs.Mockito.kotlin
+    testImplementation Libs.Mockito.inline
+    testImplementation Libs.Kotlin.Coroutines.test
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }

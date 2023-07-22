@@ -19,7 +19,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.architectcoders.wanago.di.HiltTestRunner"
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -34,11 +34,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
     buildFeatures {
         viewBinding = true
@@ -83,7 +83,18 @@ dependencies {
     implementation Libs.Hilt.android
     kapt Libs.Hilt.compiler
 
+    testImplementation project(":testShared")
     testImplementation Libs.JUnit.library
+    testImplementation Libs.Mockito.kotlin
+    testImplementation Libs.Kotlin.Coroutines.test
+    testImplementation Libs.turbine
+
     androidTestImplementation Libs.AndroidX.Test.Ext.junit
-    androidTestImplementation Libs.AndroidX.Test.Espresso.core
+    androidTestImplementation Libs.AndroidX.Test.Espresso.contrib
+    androidTestImplementation Libs.AndroidX.Test.runner
+    androidTestImplementation Libs.AndroidX.Test.rules
+    androidTestImplementation Libs.Hilt.test
+    androidTestImplementation Libs.Kotlin.Coroutines.test
+    kaptAndroidTest Libs.Hilt.compiler
+    androidTestImplementation Libs.OkHttp3.mockWebServer
 }

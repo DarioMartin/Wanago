@@ -45,7 +45,7 @@ class EventDetailsFragment : Fragment() {
             updateUiState(uiState)
         }
 
-        viewModel.loadEvent(eventId)
+        viewModel.onViewCreated(eventId)
 
     }
 
@@ -59,12 +59,11 @@ class EventDetailsFragment : Fragment() {
                 if (event.isFavorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
             binding.favoriteButton.apply {
                 setImageDrawable(ContextCompat.getDrawable(requireContext(), favRes))
-                setOnClickListener { viewModel.switchFavorite(event) }
+                setOnClickListener { viewModel.onFavButtonClick(event) }
             }
 
             Glide.with(requireContext()).load(event.imageUrl).into(binding.eventImage)
         }
     }
-
 
 }
