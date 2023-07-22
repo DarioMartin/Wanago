@@ -10,7 +10,7 @@ class RegionRepository @Inject constructor(
 ) {
 
     companion object {
-        private const val DEFAULT_REGION = "Madrid"
+        const val DEFAULT_REGION = "Madrid"
     }
 
     suspend fun findLastRegion(): String {

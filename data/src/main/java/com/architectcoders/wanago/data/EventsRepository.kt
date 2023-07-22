@@ -19,10 +19,6 @@ class EventsRepository @Inject constructor(
     private val remoteDataSource: EventsRemoteDataSource
 ) {
 
-    fun getFavoriteEvents() = localDataSource.events.map {
-        it.filter { event -> event.isFavorite }
-    }
-
     suspend fun requestNearbyEvents(coroutineScope: CoroutineScope): Flow<PagingData<WanagoEvent>> {
         val favoriteEventsFlow = getFavoriteEvents()
 
@@ -51,5 +47,9 @@ class EventsRepository @Inject constructor(
     suspend fun switchFavorite(event: WanagoEvent): WanagoError? {
         val updatedEvent = event.copy(isFavorite = !event.isFavorite)
         return localDataSource.save(listOf(updatedEvent))
+    }
+
+    private fun getFavoriteEvents(): Flow<List<WanagoEvent>> = localDataSource.events.map {
+        it.filter { event -> event.isFavorite }
     }
 }

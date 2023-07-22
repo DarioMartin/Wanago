@@ -35,14 +35,14 @@ class FragmentEventsList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.swiper.setOnRefreshListener { viewModel.getEvents() }
+        binding.swiper.setOnRefreshListener { viewModel.onSwipeToRefresh() }
 
         viewLifecycleOwner.launchAndCollect(viewModel.state) { state ->
             updateUiState(state)
         }
 
         eventsAdapter = EventsAdapter {
-            viewModel.switchFavorite(it)
+            viewModel.onFavButtonClick(it)
         }
 
         binding.recyclerEventsList.apply {

@@ -6,26 +6,28 @@ import androidx.paging.PagingData
 import com.architectcoders.wanago.data.datasource.EventsRemoteDataSource
 import com.architectcoders.wanago.data.server.model.RemoteEvent
 import com.architectcoders.wanago.di.ApiKey
+import com.architectcoders.wanago.di.NetworkPageSize
 import com.architectcoders.wanago.domain.WanagoEvent
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-const val NETWORK_PAGE_SIZE = 25
-
-class TicketMasterDataSource @Inject constructor(@ApiKey private val apiKey: String) :
-    EventsRemoteDataSource {
+class TicketMasterDataSource @Inject constructor(
+  @ApiKey private val apiKey: String,
+  @NetworkPageSize private val networkPageSize: Int,
+  private val service: RemoteService
+) : EventsRemoteDataSource {
 
     override fun findNearbyEvents(region: String): Flow<PagingData<WanagoEvent>> {
         return Pager(
-            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            config = PagingConfig(pageSize = networkPageSize, enablePlaceholders = false),
             pagingSourceFactory = {
-                EventsPagingSource(service = RemoteConnection.service, region, apiKey)
+                EventsPagingSource(apiKey, networkPageSize, service, region)
             }
         ).flow
     }
 
     override suspend fun getEventById(id: String): WanagoEvent {
-        return RemoteConnection.service.getEventById(id, apiKey).toDomainModel()
+        return service.getEventById(id, apiKey).toDomainModel()
     }
 }
 
