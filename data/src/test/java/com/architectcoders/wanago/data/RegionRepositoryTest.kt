@@ -14,7 +14,7 @@ import org.mockito.kotlin.mock
 class RegionRepositoryTest {
 
   @Test
-  fun `Returns default region when coarse permission not granted`(): Unit = runBlocking {
+  fun `returns default region when coarse permission not granted`(): Unit = runBlocking {
     val regionRepository = buildRegionRepository(
       permissionChecker = mock { on { check(COARSE_LOCATION) } doReturn false }
     )
@@ -25,7 +25,7 @@ class RegionRepositoryTest {
   }
 
   @Test
-  fun `Returns region from location data source when permission granted`(): Unit = runBlocking {
+  fun `returns region from location data source when permission granted`(): Unit = runBlocking {
     val regionRepository = buildRegionRepository(
       locationDataSource = mock { onBlocking { findLastRegion() } doReturn "ES" },
       permissionChecker = mock { on { check(COARSE_LOCATION) } doReturn true }
