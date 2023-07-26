@@ -37,6 +37,19 @@ class RegionRepositoryTest {
 
         assertEquals("ES", region)
     }
+
+    @Test
+    fun `findLastRegion returns default region when location permission is granted but LocationDataSource cannot find last region`() = runTest {
+        val regionRepository = buildRegionRepository(
+            locationDataSource = mock { onBlocking { findLastRegion() } doReturn null },
+            permissionChecker = mock { on { check(COARSE_LOCATION) } doReturn true }
+        )
+
+        val region = regionRepository.findLastRegion()
+
+        assertEquals(RegionRepository.DEFAULT_REGION, region)
+
+    }
 }
 
 private fun buildRegionRepository(
