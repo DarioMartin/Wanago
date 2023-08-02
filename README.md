@@ -27,3 +27,11 @@ The application includes a comprehensive suite of tests:
 - **Unit Tests**: Used to test individual components in isolation.
 - **Integration Tests**: Used to test the interaction between different components of the application.
 - **UI Tests**: Used to test the user interface and the user interaction with the application.
+
+## API Key Configuration
+
+To compile and run the project, you'll need to add your Ticketmaster API key to the `local.properties` file. Follow these steps:
+
+1. Open `local.properties` in the root directory.
+2. Add your API key in the following format: `ticketMasterApiKey=[api_key]`.
+3. Save the file and rebuild the project.
