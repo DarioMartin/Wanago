@@ -76,8 +76,10 @@ object Libs {
 
         object Paging {
             private const val version = "3.1.1"
+            private const val testing_version = "3.2.0-rc01"
             const val runtime = "androidx.paging:paging-runtime:$version"
             const val common = "androidx.paging:paging-common-ktx:$version"
+            const val testing = "androidx.paging:paging-testing:$testing_version"
         }
     }
 
